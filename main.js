@@ -8,6 +8,10 @@
 //------------------------------------------------------------------------------
 
 const WhatsappRH = require('./lib/client');
+const fs = require('fs');
+
+const command_path = './commands'
+const command_files = fs.readdirSync(command_path)
 
 const options = {
     qrTerminal: true,
@@ -15,23 +19,16 @@ const options = {
 
 const rh = new WhatsappRH(options);
 
-var hook = {command: 'ami', chat: 'group'};
-rh.on_hook('text', hook, async (c, m) => {
-    await c.sendMessage(m.parse.to, {text: 'Ami kuntul'});
+command_files.forEach(file => {
+    if (!file.endsWith('.js')){
+        return
+    }
+    let code = fs.readFileSync(command_path + `/${file}`, {
+        encoding: 'utf8',
+        flag: 'r'
+    })
+    eval(code)
 })
-var hook = {command: 'help'};
-rh.on_hook('mention', hook, async (c, m) => {
-    await c.sendMessage(m.parse.to, {text: 'Hello ' + m.pushName});
-})
-var hook = {};
-rh.on_hook('mention', hook, async (c, m) => {
-    await c.sendMessage(m.parse.to, {text: 'Hey ' + m.pushName});
-})
-var hook = {command: 't', type: 'exact'};
-rh.on_hook('text', hook, async (c, m) => {
-    console.log(rh.store)
-})
-
 
 async function main () {
     await rh.connect();
