@@ -18,16 +18,18 @@ const options = {
 }
 
 const rh = new WhatsappRH(options);
+exports.rh = rh;
 
 command_files.forEach(file => {
     if (!file.endsWith('.js')){
         return
     }
-    let code = fs.readFileSync(command_path + `/${file}`, {
-        encoding: 'utf8',
-        flag: 'r'
-    })
-    eval(code)
+    require(command_path + `/${file}`);
+    // let code = fs.readFileSync(command_path + `/${file}`, {
+    //     encoding: 'utf8',
+    //     flag: 'r'
+    // })
+    // eval(code)
 })
 
 async function main () {

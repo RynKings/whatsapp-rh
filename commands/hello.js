@@ -1,4 +1,4 @@
-//commands
+const { rh } = require('../main');
 
 var hook = {command: 'hello', chat: 'all'};
 rh.on_hook('text', hook, async (c, m) => {
@@ -40,3 +40,41 @@ rh.on_hook('mention', hook, async (c, m) => {
 	})()`
 	eval(f)
 })
+
+var hook = {command: 'template'};
+rh.on_hook('mention', hook, async (c, m) => {
+	const templateButtons = [
+	    {index: 1, urlButton: {displayText: '⭐ Ryns URL!', url: 'https://ryns.yoururl.app'}},
+	    {index: 2, callButton: {displayText: 'Call me!', phoneNumber: '+1 (234) 5678-901'}},
+	    {index: 3, quickReplyButton: {displayText: 'This is a reply, just like normal buttons!', id: 'id-like-buttons-message'}},
+	]
+
+	const templateMessage = {
+	    text: "Hi it's a template message",
+	    footer: 'Hello World',
+	    templateButtons: templateButtons
+	}
+
+	const sendMsg = await c.sendMessage(m.parse.to, templateMessage)
+	console.log(sendMsg);
+})
+
+var hook = {command: 'button'};
+rh.on_hook('mention', hook, async (c, m) => {
+	const buttons = [
+	  {buttonId: 'id1', buttonText: {displayText: 'Button 1'}, type: 1},
+	  {buttonId: 'id2', buttonText: {displayText: 'Button 2'}, type: 1},
+	  {buttonId: 'id3', buttonText: {displayText: 'Button 3'}, type: 1}
+	]
+
+	const buttonMessage = {
+		image: {url: 'https://1.bp.blogspot.com/-3c4VhOi5mo8/X_W4pmQZ12I/AAAAAAAAFX4/w1OzIOIkix8I8xPRImESvfIx8yb4Mr38QCLcBGAsYHQ/s365/ImgBB.png'},
+	    caption: "Hi it's button message",
+	    footer: 'Hello World',
+	    buttons: buttons,
+	    headerType: 4
+	}
+
+	const sendMsg = await c.sendMessage(m.parse.to, buttonMessage)
+	console.log(sendMsg);
+});
