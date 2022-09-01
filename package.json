@@ -14,7 +14,7 @@
   "author": "Ryns",
   "license": "ISC",
   "dependencies": {
-    "@adiwajshing/baileys": "github:adiwajshing/baileys",
+    "@adiwajshing/baileys": "@adiwajshing/baileys",
     "@adiwajshing/keyed-db": "^0.2.4",
     "qrcode-terminal": "^0.12.0"
   }
