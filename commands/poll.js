@@ -1,16 +1,19 @@
 const { rh } = require('../main');
 
-let pollSettings = {
-    active: false
-}
+let pollSettings = {}
 
 var hook = {command: 'xpoll'}
 rh.on_hook('text', hook, async (c, m) => {
 
-    if (!pollSettings.active){
-        pollSettings['option1'] = {title: 'Jam 3', num: 0}
-        pollSettings['option2'] = {title: 'Jam 4', num: 0}
-        pollSettings.active = true
+    let to = m.parse.to;
+    let sender = m.parse.sender;
+
+    if (!pollSettings[to]){
+        pollSettings[to] = {
+            active: false,
+            userclicked: [],
+            pollIds: {},
+        }
     } 
     
     const sections = [
