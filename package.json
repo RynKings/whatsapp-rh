@@ -16,6 +16,7 @@
   "dependencies": {
     "@adiwajshing/baileys": "@adiwajshing/baileys",
     "@adiwajshing/keyed-db": "^0.2.4",
+    "mongoose": "^6.5.4",
     "qrcode-terminal": "^0.12.0"
   }
 }

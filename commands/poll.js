@@ -7,34 +7,47 @@ rh.on_hook('text', hook, async (c, m) => {
 
     let to = m.parse.to;
     let sender = m.parse.sender;
+    let text = m.parse.text;
 
-    if (!pollSettings[to]){
-        pollSettings[to] = {
-            active: false,
-            userclicked: [],
-            pollIds: {},
-        }
-    } 
-    
-    const sections = [
-        {
-            title: "",
-            rows: [
-                {title: "Jam 3", rowId: "option1",},
-                {title: "Jam 4", rowId: "option2",},
-            ]
-        },
-    ]
-    
-    const listMessage = {
-        text: "Ngegrill",
-        footer: "ryns.yoururl.app",
-        title: "Poll",
-        buttonText: "Click here!",
-        sections
+    let sep = text.split(' ')
+    let cmd = text.replace(sep[0] + ' ','')
+
+    switch(cmd){
+        case "create":
+            if (pollSettings[to]) return await c.sendMessage(to, {text: "You in create mode!"});
+            pollSettings[to] = {
+                sender,
+                onTitle: true,
+                onList: false,
+            }
+            await c.sendMessage(to, {text: "poll create mode activate _please send the title poll..._"});
+            break;
+        case "cancel":
+            if (!pollSettings[to]) return await c.sendMessage(to, {text: "You're not in create mode!"});
+            delete pollSettings[to];
+            await c.sendMessage(to, {text: "poll create canceled!"});
+            break;
     }
+    
+    // const sections = [
+    //     {
+    //         title: "",
+    //         rows: [
+    //             {title: "Jam 3", rowId: "option1",},
+    //             {title: "Jam 4", rowId: "option2",},
+    //         ]
+    //     },
+    // ]
+    
+    // const listMessage = {
+    //     text: "Ngegrill",
+    //     footer: "ryns.yoururl.app",
+    //     title: "Poll",
+    //     buttonText: "Click here!",
+    //     sections
+    // }
 
-    await c.sendMessage(m.parse.to, listMessage)
+    // await c.sendMessage(m.parse.to, listMessage)
     
 })
 
